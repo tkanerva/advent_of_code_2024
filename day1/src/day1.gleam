@@ -1,7 +1,8 @@
-import gleam/erlang
+import gleam/dict.{type Dict}
 import gleam/int
 import gleam/io
 import gleam/list
+import gleam/option.{None, Some}
 import gleam/string
 import simplifile
 
@@ -35,8 +36,8 @@ fn decode_lines(lines: List(String)) -> List(#(Int, Int)) {
   |> list.map(to_ints)
 }
 
-pub fn main() {
-  //let #(a, b) = sample |> string.split(" ") |> decode_lines() |> list.unzip()
+pub fn part1() {
+  //let #(a, b) = sample |> string.split("\n") |> decode_lines() |> list.unzip()
   let #(a, b) = get_file() |> decode_lines() |> list.unzip()
 
   let sorter = fn(l) { list.sort(l, int.compare) }
@@ -50,5 +51,30 @@ pub fn main() {
 
   // sum them all up
   let assert Ok(s) = diffs |> list.reduce(fn(x, acc) { x + acc })
-  s |> int.to_string() |> io.println()
+  s
+}
+
+pub fn part2() {
+  let #(a, b) =
+    sample
+    |> string.split("\n")
+    |> decode_lines()
+    |> list.unzip()
+
+  // calculate the similarity score.
+  let result =
+    a
+    |> list.map(fn(item) {
+      let count = list.count(b, fn(x) { x == item })
+      item * count
+    })
+
+  let assert Ok(sum) = result |> list.reduce(fn(x, acc) { x + acc })
+  sum
+}
+
+pub fn main() {
+  //let result = part1()
+  let result = part2()
+  result |> int.to_string() |> io.println()
 }
