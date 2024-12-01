@@ -56,8 +56,7 @@ pub fn part1() {
 
 pub fn part2() {
   let #(a, b) =
-    sample
-    |> string.split("\n")
+    get_file()
     |> decode_lines()
     |> list.unzip()
 
