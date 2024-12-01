@@ -19,12 +19,12 @@ jobs:
           rebar3-version: "3"
           # elixir-version: "1.15.4"
       - name: Dependencies
-        working-directory: ./app
+        working-directory: ./day1
         run: gleam deps download
       - name: Tests
-        working-directory: ./app
+        working-directory: ./day1
         run: gleam test
       - name: Format
-        working-directory: ./app
+        working-directory: ./day1
         run: gleam format --check src test
         
